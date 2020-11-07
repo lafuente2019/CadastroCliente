@@ -1,5 +1,48 @@
 package com.example.cadastrocliente.Dao;
 
-public class ClienteDao {
+import android.content.ContentValues;
+import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
 
+import com.example.cadastrocliente.model.Cliente;
+
+public class ClienteDao extends SQLiteOpenHelper {
+
+    private static final String DATABASE = "muchachos";
+    private static final int VERSION = 1;
+
+    public ClienteDao (Context context){
+        super(context, DATABASE, null,VERSION);
+    }
+
+
+    @Override
+    public void onCreate(SQLiteDatabase db) {
+        String cliente = "CREATE TABLE clientes(ID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, nome TEXT NOT NULL, cpf TEXT NOT NULL," +
+                "email TEXT NOT NULL, telefone TEXT NOT NULL, endereco TEXT NOT NULL, senha INTEGER NOT NULL) ";
+
+        db.execSQL(cliente);
+    }
+
+    @Override
+    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        String cliente = "DROP TABLE IF EXISTS clientes";
+        db.execSQL(cliente);
+    }
+
+    //Metodo salvar
+    public void salvarCliente(Cliente cliente){
+        ContentValues values = new ContentValues();
+
+        values.put("nome", cliente.getNome());
+        values.put("cpf", cliente.getCpf());
+        values.put("email", cliente.getEmail());
+        values.put("telefone", cliente.getTelefone());
+        values.put("endereco", cliente.getEndereco());
+        values.put("senha", cliente.getSenha());
+
+
+        getWritableDatabase().insert("clientes",null,values);
+    }
 }
