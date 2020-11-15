@@ -45,4 +45,20 @@ public class ClienteDao extends SQLiteOpenHelper {
 
         getWritableDatabase().insert("clientes",null,values);
     }
+
+    //Metodo Atualizar
+    public void atualizar(Cliente cliente){
+        ContentValues values = new ContentValues();
+
+        values.put("nome", cliente.getNome());
+        values.put("cpf", cliente.getCpf());
+        values.put("email", cliente.getEmail());
+        values.put("telefone", cliente.getTelefone());
+        values.put("endereco", cliente.getEndereco());
+        values.put("senha", cliente.getSenha());
+
+        String [] args = {cliente.getID().toString()};
+        getWritableDatabase().update("clientes",values, "id=?", args);
+
+    }
 }
