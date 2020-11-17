@@ -2,10 +2,13 @@ package com.example.cadastrocliente.Dao;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import com.example.cadastrocliente.model.Cliente;
+
+import java.util.ArrayList;
 
 public class ClienteDao extends SQLiteOpenHelper {
 
@@ -62,8 +65,12 @@ public class ClienteDao extends SQLiteOpenHelper {
 
     }
 
+    //Metodo Excluir
+    public void excluir(Cliente cliente){
+        String [] args = {cliente.getID().toString()};
+        getWritableDatabase().delete("clientes", "id=?", args);
 
-
+    }
 
     //Metodo listar cliente
     public ArrayList<Cliente> getList(){
